@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test ": "jest",
+    "test": "jest",
     "test:docker": "docker-compose -f ../docker-compose.yml  up -d postgres-test  && npx jest --detectOpenHandles",
     "test:podman": "/usr/bin/podman-compose -f ../docker-compose.yml up -d postgres-test && npx jest --detectOpenHandles",
     "test:watch": "jest --watch",
