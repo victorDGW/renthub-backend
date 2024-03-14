@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --verbose",
+    "test": "jest",
+    "test:docker": "docker-compose -f ../docker-compose.yml  up -d postgres-test  && npx jest --detectOpenHandles",
+    "test:podman": "/usr/bin/podman-compose -f ../docker-compose.yml up -d postgres-test && npx jest --detectOpenHandles",
+    "test:watch": "jest --watch",
     "start": "tsnd --poll --respawn --transpile-only ./src/index.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",

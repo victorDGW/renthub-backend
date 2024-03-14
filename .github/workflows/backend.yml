@@ -1,9 +1,8 @@
 name: Backend
 
 on:
-  push:
-    paths:
-      - './backend/'
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   test:
@@ -12,10 +11,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Goto backend and run tests
-        run: npm i && npm test
+        run: npm i && npm run test
   docker:
     needs: test
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +31,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ../backend
           push: true
           tags: ${{ secrets.DOCKERHUB_REPO_BACKEND }}:latest, ${{ secrets.DOCKERHUB_REPO_BACKEND }}:${{ github.sha }}
