@@ -32,6 +32,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
+        if: startsWith(github.ref, 'refs/tags/')
         uses: docker/build-push-action@v5
         with:
           context: ./.
