@@ -31,9 +31,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: extract tag name
+        id: extract_tag_name
+        run: echo "::set-output name=tag_name::$(echo ${{ github.ref }} | awk -F '/' '{print $3}')"
       - name: Build and push
+        if: startsWith(github.ref, 'refs/tags/')
         uses: docker/build-push-action@v5
         with:
           context: ./.
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest, ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest, ${{ secrets.DOCKERHUB_USERNAME }}/backend:${{steps.extract_tag_name.outputs.tag_name }}
