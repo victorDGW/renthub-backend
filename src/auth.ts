@@ -31,7 +31,7 @@ export async function getUserFromReq(req: any, res: any): Promise<User | null> {
       return null
     }
   } catch {
-    console.error('invalid renthub_token')
+    console.error('invalid s renthub_token')
     return null
   }
 }
